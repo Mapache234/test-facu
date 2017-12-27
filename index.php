@@ -1,12 +1,16 @@
 <?php
+	//Llamo a la conección de la base de datos.
 	require_once("conection.php");
 
 	$nombre = "";
+	//REQUEST acepta tanto POST como GET
 	if(!empty($_REQUEST['nombre'])){
 		$nombre = $_REQUEST['nombre'];
-
+		//Preparo el insert
 	    $insertar = $mbd->prepare("INSERT INTO persona (nombre) VALUES (:nombre)");
+	    //Remplazo el ":nombre" con el valor de $nombre
 	    $insertar->bindParam(":nombre",$nombre);
+	    //Ejecuto la query. Si falla, BARDO!
 	    if(!$insertar->execute())
 	    	echo "BARDO!";
 	}
@@ -18,6 +22,7 @@
 	<head>
 		<title>FACU</title>
 		<meta charset="utf-8">
+		<?php /*LLAMO A BOOTSTRAP 4.0*/ ?>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	</head>
 	<body>
@@ -40,13 +45,15 @@
 		</div>
 	</body>
 </html>
-
+<?php /* LLAMO A JQUERY.CND es un coso que ta en la nube para que boludos como nosotros no se bajen las cosas al pedo y usemos las de arriba. */ ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
+	//Cuando el documento(la pagina) esté cargada por completo, hago lo siguiente...
 	$(document).ready(function(){
+		//En el submit, hago lo siguiten...
 		$("#formPENE").submit(function(){
 			if(!$("#nombre").val().length)
-				return false;
+				return false;//Cancelo el submit;
 		});
 	});
 </script>
